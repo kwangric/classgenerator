@@ -191,7 +191,7 @@ const generate = () => {
         }
         let primaryAttachment = loadout['primaryAttachment']
         let primaryAttachment2
-        while (!primaryAttachment2 || primaryAttachment === primaryAttachment2 || primaryAttachment2 === 'NONE') {
+        while (!primaryAttachment2 || primaryAttachment === primaryAttachment2 || primaryAttachment2 === 'NONE' || (primaryAttachment === 'RED DOT' && primaryAttachment2 === 'ACOG') || (primaryAttachment === 'ACOG' && primaryAttachment2 === 'RED DOT')) {
             primaryAttachment2 = options['primaryAttachment'][primaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][primaryWeaponType].length)]
         }
         loadout['primaryAttachment'] = loadout['primaryAttachment'] + '/' + primaryAttachment2
@@ -205,7 +205,7 @@ const generate = () => {
         }
         let secondaryAttachment = loadout['secondaryAttachment']
         let secondaryAttachment2
-        while (!secondaryAttachment2 || secondaryAttachment === secondaryAttachment2 || secondaryAttachment2 === 'NONE') {
+        while (!secondaryAttachment2 || secondaryAttachment === secondaryAttachment2 || secondaryAttachment2 === 'NONE' || (secondaryAttachment === 'RED DOT' && secondaryAttachment2 === 'ACOG') || (secondaryAttachment === 'ACOG' && secondaryAttachment2 === 'RED DOT')) {
             secondaryAttachment2 = options['primaryAttachment'][secondaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][secondaryWeaponType].length)]
         }
         loadout['secondaryAttachment'] = loadout['secondaryAttachment'] + '/' + secondaryAttachment2
