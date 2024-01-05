@@ -117,16 +117,16 @@ const options = {
 }
 
 const loadout = {
-    primaryWeapon: null,
-    primaryProficiency: null,
-    primaryAttachment: null,
-    secondaryWeapon: null,
-    secondaryAttachment: null,
-    lethal: null,
-    tactical: null,
-    perk1: null,
-    perk2: null,
-    perk3: null,
+    'primaryWeapon': null,
+    'primaryProficiency': null,
+    'primaryAttachment': null,
+    'secondaryWeapon': null,
+    'secondaryAttachment': null,
+    'lethal': null,
+    'tactical': null,
+    'perk1': null,
+    'perk2': null,
+    'perk3': null,
 }
 
 let primaryWeaponType
@@ -157,6 +157,16 @@ const generate = () => {
         }
         loadout[option] = selection
     })
+
+    // Roll two primary attachments if ATTACHMENTS proficiency is rolled
+    if (loadout['primaryProficiency'] === 'ATTACHMENTS') {
+        let primaryAttachment = loadout['primaryAttachment']
+        let primaryAttachment2
+        while (!primaryAttachment2 || primaryAttachment === primaryAttachment2) {
+            primaryAttachment2 = options['primaryAttachment'][primaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][primaryWeaponType].length)]
+        }
+        loadout['primaryAttachment'] = loadout['primaryAttachment'] + '/' + primaryAttachment2
+    }
     
     Object.keys(loadout).forEach(option => {
         document.getElementById(option).innerText = loadout[option]
