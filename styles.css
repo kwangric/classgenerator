@@ -1,3 +1,28 @@
+* {
+    font-family: 'Bungee', sans-serif;
+}
+
+body {
+    background-color: #b3b3b3;
+    color: #121212
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+}
+
+h2 {
+    color: 282828;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+h4 {
+    font-size: 0.75em;
+}
+
 .main {
     text-align: center;
     margin: 3em;
@@ -9,5 +34,5 @@
 }
 
 .box {
-    margin: 1em;
+    margin: 1em 2em;
 }
