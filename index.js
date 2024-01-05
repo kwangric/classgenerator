@@ -1,6 +1,6 @@
-const options = [
+const options = {
     // Primary
-    {
+    'primaryWeapon': {
         // AR
         'M4A1': 'AR',
         'M16A4': 'AR',
@@ -49,7 +49,7 @@ const options = [
     },
 
     // Primary Proficiency
-    {
+    'primaryProficiency': {
         'AR': ['NONE', 'KICK', 'IMPACT', 'ATTACHMENTS', 'FOCUS', 'BREATH', 'STABILITY'],
         'SMG': ['NONE', 'KICK', 'RANGE', 'ATTACHMENTS', 'FOCUS', 'MELEE', 'STABILITY'],
         'LMG': ['NONE', 'KICK', 'IMPACT', 'ATTACHMENTS', 'FOCUS', 'SPEED', 'STABILITY'],
@@ -59,7 +59,7 @@ const options = [
     },
 
     // Primary Attachment
-    {
+    'primaryAttachment': {
         'AR': ['NONE', 'RED DOT', 'SILENCER', 'TUBE', 'ACOG', 'HEARTBEAT', 'HOLOGRAPHIC', 'SHOTGUN', 'HYBRID', 'EXTENDED MAG', 'THERMAL'],
         'SMG': ['NONE', 'RED DOT', 'SILENCER', 'RAPID FIRE', 'ACOG SCOPE', 'HOLOGRAPHIC', 'HAMR', 'EXTENDED MAG', 'THERMAL'],
         'LMG': ['NONE', 'RED DOT', 'SILENCER', 'GRIP', 'ACOG', 'RAPID FIRE', 'HEARTBEAT', 'HOLOGRAPHIC', 'EXTENDED MAG', 'THERMAL'],
@@ -69,7 +69,7 @@ const options = [
     },
 
     // Secondary
-    {
+    'secondaryWeapon': {
         // Machine Pistol
         'FMG9': 'Machine Pistol',
         'MP9': 'Machine Pistol',
@@ -94,56 +94,72 @@ const options = [
     },
 
     // Secondary Attachment
-    {
+    'secondaryAttachment': {
         'Machine Pistol': ['NONE', 'SILENCER', 'AKIMBO', 'RED DOT', 'HOLOGRAPHIC', 'EXTENDED MAG'],
         'Handgun': ['NONE', 'SILENCER', 'AKIMBO', 'TAC KNIFE', 'EXTENDED MAG'],
         'Launcher': ['NONE']
     },
 
     // Lethal
-    ['FRAG', 'SEMTEX', 'THROWING KNIFE', 'BOUNCING BETTY', 'CLAYMORE', 'C4'],
+    'lethal': ['FRAG', 'SEMTEX', 'THROWING KNIFE', 'BOUNCING BETTY', 'CLAYMORE', 'C4'],
 
     // Tactical
-    ['FLASH', 'CONCUSSION', 'SCRAMBLER', 'EMP', 'SMOKE', 'TROPHY SYSTEM', 'TAC INSERT', 'PORTABLE RADAR'],
+    'tactical': ['FLASH', 'CONCUSSION', 'SCRAMBLER', 'EMP', 'SMOKE', 'TROPHY SYSTEM', 'TAC INSERT', 'PORTABLE RADAR'],
 
     // Perk 1
-    ['RECON', 'SLEIGHT OF HAND', 'BLIND EYE', 'EXTREME CONDITIONING', 'SCAVENGER'],
+    'perk1': ['RECON', 'SLEIGHT OF HAND', 'BLIND EYE', 'EXTREME CONDITIONING', 'SCAVENGER'],
 
     // Perk 2
-    ['QUICKDRAW', 'BLAST SHIELD', 'HARDLINE', 'ASSASSIN', 'OVERKILL'],
+    'perk2': ['QUICKDRAW', 'BLAST SHIELD', 'HARDLINE', 'ASSASSIN', 'OVERKILL'],
 
     // Perk 3
-    ['MARKSMAN', 'STALKER', 'SITREP', 'STEADY AIM', 'DEAD SILENCE']
-]
+    'perk3': ['MARKSMAN', 'STALKER', 'SITREP', 'STEADY AIM', 'DEAD SILENCE']
+}
+
+const loadout = {
+    primaryWeapon: null,
+    primaryProficiency: null,
+    primaryAttachment: null,
+    secondaryWeapon: null,
+    secondaryAttachment: null,
+    lethal: null,
+    tactical: null,
+    perk1: null,
+    perk2: null,
+    perk3: null,
+}
 
 let primaryWeaponType
 let secondaryWeaponType
 
 const generate = () => {
-    const results = Array.from(document.getElementsByClassName('result'))
-    results.forEach((result, index) => {
+    Object.keys(loadout).forEach(option => {
         let selection
-        let list = options[index]
+        let list = options[option]
         if (Array.isArray(list)) {
             selection = list[Math.floor(Math.random()*list.length)]
         } else {
-            if (index === 0) {
+            if (option === 'primaryWeapon') {
                 let weapons = Object.keys(list)
                 let primaryWeapon = weapons[Math.floor(Math.random()*weapons.length)]
                 primaryWeaponType = list[primaryWeapon]
                 selection = primaryWeapon
-            } else if (index === 3) {
+            } else if (option === 'secondaryWeapon') {
                 let weapons = Object.keys(list)
                 let secondaryWeapon = weapons[Math.floor(Math.random()*weapons.length)]
                 secondaryWeaponType = list[secondaryWeapon]
                 selection = secondaryWeapon
-            } else if (index === 1 || index === 2){
+            } else if (option === 'primaryProficiency' || option === 'primaryAttachment'){
                 selection = list[primaryWeaponType][Math.floor(Math.random()*list[primaryWeaponType].length)]
-            } else if (index === 4) {
+            } else if (option === 'secondaryAttachment') {
                 selection = list[secondaryWeaponType][Math.floor(Math.random()*list[secondaryWeaponType].length)]
             }
         }
-        result.innerText = selection
+        loadout[option] = selection
+    })
+    
+    Object.keys(loadout).forEach(option => {
+        document.getElementById(option).innerText = loadout[option]
     })
 }
 
