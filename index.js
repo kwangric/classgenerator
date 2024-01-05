@@ -131,10 +131,12 @@ const loadout = {
 
 let primaryWeaponType
 let secondaryWeaponType
+let secondaryProficiency
 
 const generate = () => {
     // Clear secondary proficiency
     document.getElementById('secondaryProficiency').innerText = ''
+    secondaryProficiency = null
 
     Object.keys(loadout).forEach(option => {
         let selection
@@ -174,7 +176,8 @@ const generate = () => {
         loadout['secondaryWeapon'] = secondaryWeapon
         
         // Proficiency
-        document.getElementById('secondaryProficiency').innerText = options['primaryProficiency'][secondaryWeaponType][Math.floor(Math.random()*options['primaryProficiency'][secondaryWeaponType].length)]
+        secondaryProficiency = options['primaryProficiency'][secondaryWeaponType][Math.floor(Math.random()*options['primaryProficiency'][secondaryWeaponType].length)]
+        document.getElementById('secondaryProficiency').innerText = secondaryProficiency
 
         // Attachment
         loadout['secondaryAttachment'] = options['primaryAttachment'][secondaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][secondaryWeaponType].length)]
@@ -182,12 +185,30 @@ const generate = () => {
 
     // Roll two primary attachments if ATTACHMENTS proficiency is rolled
     if (loadout['primaryProficiency'] === 'ATTACHMENTS') {
+        // Reroll attachment if NONE
+        while (loadout['primaryAttachment'] === 'NONE') {
+            loadout['primaryAttachment'] = options['primaryAttachment'][primaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][primaryWeaponType].length)]
+        }
         let primaryAttachment = loadout['primaryAttachment']
         let primaryAttachment2
-        while (!primaryAttachment2 || primaryAttachment === primaryAttachment2) {
+        while (!primaryAttachment2 || primaryAttachment === primaryAttachment2 || primaryAttachment2 === 'NONE') {
             primaryAttachment2 = options['primaryAttachment'][primaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][primaryWeaponType].length)]
         }
         loadout['primaryAttachment'] = loadout['primaryAttachment'] + '/' + primaryAttachment2
+    }
+
+    // Roll two secondary attachments if ATTACHMENTS proficiency is rolled
+    if (secondaryProficiency === 'ATTACHMENTS') {
+        // Reroll attachment if NONE
+        while (loadout['secondaryAttachment'] === 'NONE') {
+            loadout['secondaryAttachment'] = options['primaryAttachment'][secondaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][secondaryWeaponType].length)]
+        }
+        let secondaryAttachment = loadout['secondaryAttachment']
+        let secondaryAttachment2
+        while (!secondaryAttachment2 || secondaryAttachment === secondaryAttachment2 || secondaryAttachment2 === 'NONE') {
+            secondaryAttachment2 = options['primaryAttachment'][secondaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][secondaryWeaponType].length)]
+        }
+        loadout['secondaryAttachment'] = loadout['secondaryAttachment'] + '/' + secondaryAttachment2
     }
     
     Object.keys(loadout).forEach(option => {
