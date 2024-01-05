@@ -1,5 +1,6 @@
 .main {
     text-align: center;
+    margin: 3em;
 }
 
 .row {
@@ -8,5 +9,5 @@
 }
 
 .box {
-    margin: 2em;
+    margin: 1em;
 }
