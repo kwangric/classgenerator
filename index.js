@@ -133,6 +133,9 @@ let primaryWeaponType
 let secondaryWeaponType
 
 const generate = () => {
+    // Clear secondary proficiency
+    document.getElementById('secondaryProficiency').innerText = ''
+
     Object.keys(loadout).forEach(option => {
         let selection
         let list = options[option]
@@ -157,6 +160,25 @@ const generate = () => {
         }
         loadout[option] = selection
     })
+
+    // Roll second primary if OVERKILL perk is rolled
+    if (loadout['perk2'] === 'OVERKILL') {
+        // Weapon
+        let weapons = Object.keys(options['primaryWeapon'])
+        let primaryWeapon = loadout['primaryWeapon']
+        let secondaryWeapon
+        while (!secondaryWeapon || primaryWeapon === secondaryWeapon) {
+            secondaryWeapon = weapons[Math.floor(Math.random()*weapons.length)]
+        }
+        secondaryWeaponType = options['primaryWeapon'][secondaryWeapon]
+        loadout['secondaryWeapon'] = secondaryWeapon
+        
+        // Proficiency
+        document.getElementById('secondaryProficiency').innerText = options['primaryProficiency'][secondaryWeaponType][Math.floor(Math.random()*options['primaryProficiency'][secondaryWeaponType].length)]
+
+        // Attachment
+        loadout['secondaryAttachment'] = options['primaryAttachment'][secondaryWeaponType][Math.floor(Math.random()*options['primaryAttachment'][secondaryWeaponType].length)]
+    }
 
     // Roll two primary attachments if ATTACHMENTS proficiency is rolled
     if (loadout['primaryProficiency'] === 'ATTACHMENTS') {
