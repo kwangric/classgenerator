@@ -116,10 +116,34 @@ const options = [
     ['MARKSMAN', 'STALKER', 'SITREP', 'STEADY AIM', 'DEAD SILENCE']
 ]
 
+let primaryWeaponType
+let secondaryWeaponType
+
 const generate = () => {
     const results = Array.from(document.getElementsByClassName('result'))
     results.forEach((result, index) => {
-        result.innerText = options[index][Math.floor(Math.random()*options.length)]
+        let selection
+        let list = options[index]
+        if (Array.isArray(list)) {
+            selection = list[Math.floor(Math.random()*list.length)]
+        } else {
+            if (index === 0) {
+                let weapons = Object.keys(list)
+                let primaryWeapon = weapons[Math.floor(Math.random()*weapons.length)]
+                primaryWeaponType = list[primaryWeapon]
+                selection = primaryWeapon
+            } else if (index === 3) {
+                let weapons = Object.keys(list)
+                let secondaryWeapon = weapons[Math.floor(Math.random()*weapons.length)]
+                secondaryWeaponType = list[secondaryWeapon]
+                selection = secondaryWeapon
+            } else if (index === 1 || index === 2){
+                selection = list[primaryWeaponType][Math.floor(Math.random()*list[primaryWeaponType].length)]
+            } else if (index === 4) {
+                selection = list[secondaryWeaponType][Math.floor(Math.random()*list[secondaryWeaponType].length)]
+            }
+        }
+        result.innerText = selection
     })
 }
 
