@@ -216,4 +216,6 @@ const generate = () => {
     })
 }
 
+generate()
+
 document.getElementById('generate').addEventListener('click', generate)
